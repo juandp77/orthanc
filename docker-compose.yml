@@ -2,6 +2,7 @@ version: '3.8'
 services:
   db:
     image: mariadb:latest
+    container_name: orthanc_db
     environment:
       MYSQL_DATABASE: "orthanc"
       MYSQL_USER: "orthanc"
@@ -19,6 +20,7 @@ services:
     # image: jodogne/orthanc-plugins:latest 
     image: osimis/orthanc:latest
     hostname: orthanc
+    container_name: orthanc
     environment:
       ORTHANC__NAME: "Orthanc"
       OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED: "true"
