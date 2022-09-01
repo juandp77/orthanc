@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: "orthanc"
+      MYSQL_USER: "orthanc"
+      MYSQL_PASSWORD: "orthanc"
+      MYSQL_ROOT_PASSWORD: "testing123"
+    restart: unless-stopped
+    command:
+      - "--max_allowed_packet=500M"
+    volumes:
+      - "orthanc-data:/var/lib/mysql"
+    ports:
+      - "3301:3306"
+
+  orthanc:
+    # image: jodogne/orthanc-plugins:latest 
+    image: osimis/orthanc:latest
+    hostname: orthanc
+    environment:
+      ORTHANC__NAME: "Orthanc"
+      OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED: "true"
+      ORTHANC_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      # you must enable the StoneViewer and the DicomWeb plugins
+      STONE_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      DICOM_WEB_PLUGIN_ENABLED: "true"
+      WSI_PLUGIN_ENABLED: "true"
+      # StoneViewer configurations
+      ORTHANC__STONE_WEB_VIEWER__DATE_FORMAT: "DD/MM/YYYY"
+      # Expected message origin should match the external url. * can be used as an insecure default
+      ORTHANC__STONE_WEB_VIEWER__EXPECTED_MESSAGE_ORIGIN" : "*"
+      # ORTHANC__STONE_WEB_VIEWER__EXPECTED_MESSAGE_ORIGIN" : "http://localhost:8042"
+      ORTHANC__STONE_WEB_VIEWER__DICOM_CACHE_SIZE" : 250
+      ORTHANC__MYSQL__HOST: "db"
+      ORTHANC__MYSQL__PORT: "3306"
+      ORTHANC__MYSQL__DATABASE: "orthanc"
+      ORTHANC__MYSQL__USERNAME: "orthanc"
+      ORTHANC__MYSQL__PASSWORD: "orthanc"
+      ORTHANC__MYSQL__ENABLESSL: "false"
+      ORTHANC__MYSQL__SSLVERIFYSERVERCERTIFICATES: "true"
+      ORTHANC__MYSQL__SSLCACERTIFICATES: ""
+      # The following 2 settings do not appear to be recognised, so are also in the orthanc.json config file
+      ORTHANC__MYSQL__ENABLEINDEX: "true"
+      ORTHANC__MYSQL__ENABLESTORAGE: "true"
+    volumes:
+      # Config
+      - ./config/orthanc.json:/etc/orthanc/orthanc.json:ro
+      # Persist data - if not using MySQL
+      # - ./volumes/orthanc-db/:/var/lib/orthanc/db/
+    ports:
+      - '8042:8042'
+      - '4242:4242' # DICOM
+    restart: unless-stopped
+    depends_on:
+      - db
+
+volumes:
+  orthanc-data:
