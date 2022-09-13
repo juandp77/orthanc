@@ -37,7 +37,7 @@
     "test": "test"
   },
   "DicomModalities": {
-    "HOROS" : [ "MacbookdeJuand.localdomain", "100.109.130.128", 11112 ],
+    "HOROS" : [ "HOROS", "100.109.130.128", 11112 ],
     "IPADPRO" : [ "IPADPRO", "192.168.10.127", 11112 ] 
   },
   "DicomModalitiesInDatabase": false,
