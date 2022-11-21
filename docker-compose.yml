@@ -23,8 +23,8 @@ services:
     container_name: orthanc
     environment:
       ORTHANC__NAME: "Orthanc"
-      #OSIMIS_WEB_VIEWER1_PLUGIN_ENABLED: "true"
-      #ORTHANC_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      OSIMIS_WEB_VIEWER_PLUGIN_ENABLED: "true"
+      ORTHANC_WEB_VIEWER_PLUGIN_ENABLED: "true"
       # you must enable the StoneViewer and the DicomWeb plugins
       STONE_WEB_VIEWER_PLUGIN_ENABLED: "true"
       DICOM_WEB_PLUGIN_ENABLED: "true"
