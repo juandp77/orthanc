@@ -38,6 +38,7 @@
   },
   "DicomModalities": {
     "HOROS" : [ "HOROS", "100.109.130.128", 11112 ],
+    "iMAC_CONSULTA_DR" : ["iMac-de-Lara.local", "100.92.94.40", 11118],
     "IPADPRO" : [ "IPADPRO", "192.168.10.127", 11112 ] 
   },
   "DicomModalitiesInDatabase": false,
